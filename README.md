@@ -1,2 +1,3 @@
 # Banco_com_SQLite
-Banco de daods com SQLite
+
+Banco de dados com SQLite
