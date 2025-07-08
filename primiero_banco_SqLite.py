@@ -13,7 +13,7 @@ def conexao_banco():
 vcon = conexao_banco()
 
 ##########criar tabela
-criuar_tabela1 = """CREATE TABLE CONTATOS(
+criar_tabela1 = """CREATE TABLE CONTATOS(
                 ID_CONTATO INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                 NOME_CONTATO VARCHAR(30) NOT NULL,
                 TELEFONE_CONTATO VARCHAR (11) NOT NULL,
@@ -21,29 +21,75 @@ criuar_tabela1 = """CREATE TABLE CONTATOS(
 );"""
 
 ##########inserir valores na tabela 
-inserir_valor = """INSERT INTO CONTATOS
-                      (NOME_CONTATO,TELEFONE_CONTATO,EMAIL_CONTATO)
-                  VALUES('Marcos André Oliveira dos Santos','(82)99876-5432-','m4rcos.oliveira19@gmail.com')"""
+#nome = input('Digite o seu nome: ')
+#tel = input('Digite o seu contato: ')
+#email = input('Digite o seu e-mail: ')
+#inserir_valor = """INSERT INTO CONTATOS
+#                      (NOME_CONTATO,TELEFONE_CONTATO,EMAIL_CONTATO)
+#                  VALUES(?,?,?)"""
+#dados = (nome,tel, email)
+
+##########Deletar valores da tabela
+deletar_valor = """DELETE FROM CONTATOS WHERE ID_CONTATO=9"""
+
+##########Atualizar valor
+atualizar_tabela = """UPDATE CONTATOS SET NOME_CONTATO='SANDRO' WHERE ID_CONTATO = 10"""
+
+##########Consultar tabela
+consultar_tabela = """SELECT * FROM CONTATOS """
+
 def criar_tabela(conexao,sql):
   try:
-    cursor=conexao.cursor()
+    cursor=conexao.cursor() 
     cursor.execute(sql)
     print('tabela criada')
   except Error as ex:
     print(ex)
 
-def inserir(conexao,sql):
+def inserir(conexao,sql,dados):
   try:
     cursor = conexao.cursor()
-    cursor.execute(sql)
-    cursor.commit()
+    cursor.execute(sql,dados)
+    conexao.commit()
     print('Inserido com sucesso')
   except Error as ex:
     print(ex)
 
+def deletar(conexao,sql):
+  try:
+    cursor = conexao.cursor()
+    cursor.execute(sql)
+    conexao.commit()
+    print('Itens deletados com sucesso')
+  except Error as ex:
+    print(ex)
+
+def atualizar(conexao,sql):
+  try:
+    cursor = conexao.cursor()
+    cursor.execute(sql)
+    conexao.commit()
+    print('Valor atualizado com sucesso')
+  except Error as ex:
+    print(ex)
+
+def consultar(conexao,sql):
+  cursor = conexao.cursor()
+  cursor.execute(sql)
+  resultado = cursor.fetchall()
+  return resultado
+  
+
+
 ##########CHAMADAS
-#criar_tabela(vcon,criuar_tabela1)
-inserir(vcon,inserir_valor)
+#criar_tabela(vcon,criar_tabela1)
+#inserir(vcon,inserir_valor,dados)
+#deletar(vcon,deletar_valor)
+#atualizar(vcon,atualizar_tabela)
+res = consultar(vcon,consultar_tabela)
+for r in res:
+  print(r)
+
 
 
 vcon.close()
