@@ -27,7 +27,7 @@ email = input('Digite o seu e-mail: ')
 inserir_valor = """INSERT INTO CONTATOS
                       (NOME_CONTATO,TELEFONE_CONTATO,EMAIL_CONTATO)
                   VALUES(?,?,?)"""
-#dados = (nome,tel, email)
+dados = (nome,tel, email)
 
 ##########Deletar valores da tabela
 deletar_valor = """DELETE FROM CONTATOS WHERE ID_CONTATO=9"""
