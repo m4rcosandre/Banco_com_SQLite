@@ -22,8 +22,7 @@ def menuprincipal():
   print("2 - Deletar registro ")
   print("3 - Atualizar registro ")
   print("4 - Consultar registro ")
-  print("5 - Consultar registro por Nome ")
-  print("6 - Sair ")
+  print("5 - Sair ")
 #---------------------------------------------------------
 def inserir(conexao):
   os.system('cls')
@@ -97,11 +96,26 @@ def atualizar(conexao):
   except Error as ex:
     print(ex)
 #---------------------------------------------------------
-def consultar():
-  print()
+def consultar(conexao):
+  os.system('cls')
+  sql = """SELECT * FROM AGENDA """
+  try:
+    cursor = conexao.cursor()
+    cursor.execute(sql)
+    registros = cursor.fetchall()
+  
+    if len(registros) == 0:
+      print('Nenhum registro encontrado')
+    else:
+      print('Registros encontrados')
+      for registro in registros:
+        print(f'ID: {registro[0]} \nNome: {registro[1]} \nContato{registro[2]} \nCEP: {registro[3]} \nEmail: {registro[4]}')
+        print('--------------------------------------------------')
+  except Error as ex:
+    print(ex)
+  input('Precione "ENTER" para sair!')
 #---------------------------------------------------------
-def consulta_nome():
-  print()
+
 
   
 opcao = 0
@@ -118,8 +132,6 @@ while opcao != 6:
   elif opcao == 4:
     consultar(vcon)
   elif opcao == 5:
-    consulta_nome(vcon)
-  elif opcao == 6:
     os.system('cls')
     print("Obrigado e volte sempre!") 
     vcon.close()
